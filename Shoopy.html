@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Shopping App</title>
+    <style>
+        body { 
+            font-family: 'Arial', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background: linear-gradient(135deg, #6e45e2, #88d3ce);
+            color: #fff;
+            min-height: 100vh;
+        }
+        h2 { text-align: center; margin: 30px 0; text-shadow: 2px 2px #333; }
+        .product-container { 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            margin: 20px; 
+            gap: 20px;
+        }
+        .product { 
+            border: 2px solid #fff; 
+            border-radius: 15px; 
+            padding: 20px; 
+            width: 220px; 
+            text-align: center; 
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s ease;
+        }
+        .product:hover { 
+            transform: scale(1.05); 
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+        .product img { 
+            width: 100%; 
+            height: auto; 
+            border-radius: 10px; 
+            margin-bottom: 15px;
+        }
+        .product h4 { margin: 10px 0; }
+        .product p { font-size: 1.2em; color: #fff; }
+        .product button { 
+            margin-top: 10px; 
+            padding: 10px 15px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            background: #ff6f61;
+            color: #fff;
+            transition: background 0.3s;
+        }
+        .product button:hover { background: #ff3b2e; }
+        .cart {
+            margin: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+        .cart-item { margin: 10px 0; font-size: 1.1em; }
+        .checkout {
+            margin-top: 20px;
+        }
+        .checkout button {
+            padding: 15px 20px;
+            border: none;
+            border-radius: 10px;
+            background: #28a745;
+            color: #fff;
+            font-size: 1.2em;
+            transition: background 0.3s;
+        }
+        .checkout button:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <h2>Advanced Shopping App</h2>
+    <div class="product-container" id="productContainer"></div>
+
+    <div class="cart">
+        <h3>Shopping Cart</h3>
+        <div id="cartItems"></div>
+        <div class="checkout">
+            <p>Total: $<span id="total">0</span></p>
+            <button onclick="checkout()">Checkout</button>
+        </div>
+    </div>
+
+    <script>
+                const products = [
+            { id: 1, name: 'Laptop', price: 999, image: 'https://jamesandco.in/wp-content/uploads/2024/09/Laptop-1-150x150.png' },
+            { id: 2, name: 'Phone', price: 699, image: 'https://jamesandco.in/wp-content/uploads/2025/01/vivo-v40-3-400x400.png' },
+            { id: 3, name: 'Headphones', price: 199, image: 'https://jamesandco.in/wp-content/uploads/2024/09/earbuds-400x400.png' },
+            { id: 4, name: 'Smartwatch', price: 299, image: 'https://jamesandco.in/wp-content/uploads/2024/12/watches-1-3-400x400.png' },
+            { id: 5, name: 'Tablet', price: 499, image: 'https://jamesandco.in/wp-content/uploads/2024/12/Tablet-1-400x400.png' },
+            { id: 6, name: 'Speaker', price: 599, image: 'https://jamesandco.in/wp-content/uploads/2024/12/watches-1-1-2-400x400.png' },
+            { id: 7, name: 'Television', price: 799, image: 'https://jamesandco.in/wp-content/uploads/2024/12/Television-1-2-400x400.png' },
+            { id: 8, name: 'Powerbank', price: 299, image: 'https://jamesandco.in/wp-content/uploads/2024/12/Power-Bank-1-1-400x400.png' },
+            { id: 9, name: 'Keyboard & Mouse', price: 99, image: 'https://jamesandco.in/wp-content/uploads/2024/12/Key-board-Mouse-copy-1-400x400.png' },
+        ];
+
+
+        const cart = [];
+
+        function displayProducts() {
+            const container = document.getElementById('productContainer');
+            products.forEach(product => {
+                container.innerHTML += `
+                    <div class="product">
+                        <img src="${product.image}" alt="${product.name}">
+                        <h4>${product.name}</h4>
+                        <p>$${product.price}</p>
+                        <button onclick="addToCart(${product.id})">Add to Cart</button>
+                    </div>
+                `;
+            });
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            cart.push(product);
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById('cartItems');
+            let total = 0;
+            cartItems.innerHTML = '';
+            cart.forEach(item => {
+                cartItems.innerHTML += `<div class="cart-item">${item.name} - $${item.price}</div>`;
+                total += item.price;
+            });
+            document.getElementById('total').innerText = total;
+        }
+
+        function checkout() {
+            alert('Thank you for your purchase!');
+            cart.length = 0;
+            updateCart();
+        }
+
+        displayProducts();
+    </script>
+</body>
+</html>
